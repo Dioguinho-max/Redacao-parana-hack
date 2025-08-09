@@ -18,7 +18,37 @@ Este repositório contém um **bookmarklet** (atalho de favorito) que permite co
 - Copie o código abaixo (em uma única linha):
 
 ```javascript
-javascript:(async()=>{const texto=`AQUI SEU TEXTO !!!!!!!!!!!!!!!!!!!!!!`;function d(ms){return new Promise(r=>setTimeout(r,ms))}function w(){return new Promise(r=>{const i=setInterval(()=>{const t=document.querySelector('textarea');if(t){clearInterval(i);r(t)}},500)})}const campo=await w();campo.focus();for(let c of texto){campo.setRangeText(c,campo.selectionStart,campo.selectionEnd,'end');campo.dispatchEvent(new KeyboardEvent('keydown',{key:c}));campo.dispatchEvent(new InputEvent('input',{bubbles:true,data:c,inputType:'insertText'}));campo.dispatchEvent(new KeyboardEvent('keyup',{key:c}));await d(20)}alert('Texto digitado com sucesso!');})();
+javascript:(async()=>{
+  const texto = prompt("Digite o texto que será digitado automaticamente:");
+  if(!texto) return alert("Nenhum texto foi digitado.");
+  
+  function d(ms){return new Promise(r=>setTimeout(r,ms))}
+  function w(){
+    return new Promise(r=>{
+      const i=setInterval(()=>{
+        const t=document.querySelector('textarea');
+        if(t){
+          clearInterval(i);
+          r(t);
+        }
+      },500)
+    })
+  }
+  
+  const campo=await w();
+  campo.focus();
+  
+  for(let c of texto){
+    campo.setRangeText(c,campo.selectionStart,campo.selectionEnd,'end');
+    campo.dispatchEvent(new KeyboardEvent('keydown',{key:c}));
+    campo.dispatchEvent(new InputEvent('input',{bubbles:true,data:c,inputType:'insertText'}));
+    campo.dispatchEvent(new KeyboardEvent('keyup',{key:c}));
+    await d(20);
+  }
+  
+  alert('Texto digitado com sucesso!');
+})();
+
 ```
 
 ### 2. Adicionar aos favoritos
@@ -27,11 +57,6 @@ javascript:(async()=>{const texto=`AQUI SEU TEXTO !!!!!!!!!!!!!!!!!!!!!!`;functi
 - No campo "Nome", coloque algo como: `Liberar Redação`.
 - No campo "URL", cole o código acima.
 - Salve o favorito.
-
-### ⚠️ Personalize sua redação
-
-- Substitua `AQUI SEU TEXTO !!!!!!!!!!!!!!!!!!!!!!` pela sua redação completa (entre crases ` `).
-- Tudo deve estar em uma única linha.
 
 ### 3. Usar
 
