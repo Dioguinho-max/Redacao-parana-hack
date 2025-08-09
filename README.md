@@ -15,7 +15,7 @@ Este repositório contém um **bookmarklet** (atalho de favorito) que permite co
 
 ### 1. Criar o bookmarklet
 
-- Copie o código abaixo (em uma única linha):
+- Copie o código abaixo:
 
 ```javascript
 javascript:(async()=>{
